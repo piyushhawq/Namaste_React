@@ -1,27 +1,3 @@
-import React from "react";
-import  ReactDOM  from "react-dom/client";
-
-
-
-const Header = ()=>{
-    return (
-        <div className="header">
-            <div className="logo-container">
-                <img className="logo" src="https://raw.githubusercontent.com/piyushhawq/Images/main/ByteBhojan.png"/>
-            </div>
-            <div className="nav-item">
-               <ul>
-                <li>Home</li>
-                <li>About Us</li>
-                <li>Contact Us</li>
-                <li>Cart</li>
-               
-               </ul>
-            </div>
-        </div>
-    )
-} 
-
 const resList =  [
     {
       "info": {
@@ -961,59 +937,6 @@ const resList =  [
       },
       "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food_seo"
     }
-  ]
-const ResturentCard =(props)=>{
-  const  { resData }=props;
-//   console.log("resData",resData)
-  const {name,
-    cloudinaryImageId,
-    costForTwo,
-    cuisines,
-   sla,
-    avgRating}= resData?.info;
-    return(
-        // <h1>testing</h1>
-        <div className="res-card">
-           <img className="res-logo" src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${cloudinaryImageId}`} alt ="reslogo"/>
-            <h3>{name}</h3>
-            <h4 className="cuisines">{cuisines.join(", ")}</h4>
-            <h4>{costForTwo}</h4>
-            <h4>{avgRating} star</h4>
-            <h4>{sla.deliveryTime} minutes</h4>
+  ];
 
-        </div>
-    )
-}
-
-const Body = () => {
-    return (
-     <div className="body">
-        <div className="Search">
-            <input type="text"/>
-            <button> Search</button>
-        </div>
- <div className="res-container">
-{
-    resList.map(resturant => <ResturentCard key ={resturant.info.id} resData ={resturant}/>)
-}
-
-
- </div>
-     </div>
-    )
-}
-
-const AppLayout = ()=>{
-    return(
-<div className="app">
-<Header/>
-<Body/>
-</div>
-
-    )
-    
-} 
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-
-root.render(<AppLayout/>);      
+export default resList;
