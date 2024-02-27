@@ -1,6 +1,7 @@
 import { useState ,useEffect} from "react"; 
 import ResturentCard from "./ResturentCard";
 import HomeShimmer from "./HomeShimmer";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   const [listOfRestaurants,setListOfRestaurants] = useState([]);
@@ -11,10 +12,12 @@ const Body = () => {
   const [searchText, setSearchText] = useState('');
  const [avilable, setAvilable] = useState(false);
 
-  const handleSearch = () => {
-    console.log("Searching for location:", location);
 
-  };
+
+  // const handleSearch = () => {
+  //   console.log("Searching for location:", location);
+
+  // };
 
   const handleInputChange = (event) => {
     setLocation(event.target.value);
@@ -28,7 +31,7 @@ fetchData();
   const fetchData = async()=>{
  const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=25.3176452&lng=82.9739144&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
  const json = await  data.json();
- console.log("api data",json);
+//  console.log("api data",json);
  setJsonData(json)
 
   }
@@ -62,15 +65,18 @@ useEffect(() => {
 }, [location]);
 
 
+
+
   useEffect(() => {
-    // Check window size or any other condition to determine which index to use
-    const desiredIndex = window.innerWidth > 768 ? 4 : 2;
-    const restaurants = jsonData?.data?.cards[desiredIndex]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
-    if (restaurants) {
-        setListOfRestaurants(restaurants);
-        setFilterdRestaurants(restaurants);
-        console.log("resturent cards ", restaurants);
-    }
+    const ResData = jsonData?.data?.cards?.find(
+      (card) =>
+        card?.card?.card?.gridElements?.infoWithStyle?.restaurants !=
+        undefined
+    )?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+    
+    // console.log(ResData);
+    setListOfRestaurants(ResData);
+        setFilterdRestaurants(ResData);
   }, [jsonData]);
 
 
@@ -156,7 +162,7 @@ useEffect(() => {
  <div className="res-container">
   {avilable ? <h1>Not available 😯😌😢</h1> : (
     filterdRestaurants && filterdRestaurants.map(resturant => (
-      <ResturentCard key={resturant.info.id} resData={resturant} />
+    <Link to = {"/home/restaurants/"+ resturant.info.id} key={resturant.info.id}>  <ResturentCard  resData={resturant} /></Link>
     ))
   )}
 </div>
