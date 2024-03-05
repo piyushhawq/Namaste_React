@@ -19,8 +19,14 @@
     padding: 5px 10px;
     list-style: none;
     font-size: 24px;
+    text-decoration: none;
 }
 
+.nav-item > ul > li a {
+  font-size: 24px;
+  text-decoration: none;
+  color: inherit; /* or specify the desired text color */
+}
 
 .login-btn{
     margin:  5px 10px;
@@ -58,6 +64,12 @@
     display: flex;
     flex-direction: row;
 }
+
+.user-card{
+    padding: 10px;
+    width: 250px;
+border: 1px solid  black;
+}
 /* body */
 
 
@@ -72,8 +84,11 @@
     padding: 5px; 
     border-radius: 5px;
     background-color: #f1f1f1;
+    color: inherit;
     box-shadow: 1px 2px 4px rgb(173, 171, 171);
 }
+
+
 .res-card:hover{
     border: 1px solid black;
     cursor: pointer;

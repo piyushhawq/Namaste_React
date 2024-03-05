@@ -162,7 +162,7 @@ useEffect(() => {
  <div className="res-container">
   {avilable ? <h1>Not available 😯😌😢</h1> : (
     filterdRestaurants && filterdRestaurants.map(resturant => (
-    <Link to = {"/home/restaurants/"+ resturant.info.id} key={resturant.info.id}>  <ResturentCard  resData={resturant} /></Link>
+    <Link to = {"/home/restaurants/"+ resturant.info.id} key={resturant.info.id}>  <ResturentCard className ="rescardlist" resData={resturant} /></Link>
     ))
   )}
 </div>

@@ -11,9 +11,9 @@ const [btnName,setBtnName] = useState("Login")
             </div>
             <div className="nav-item">
                <ul>
-                <Link to= "/home"> <li>Home</li> </Link>
-                <Link to= "/home/about"><li>About Us</li></Link>
-                <Link to= "/home/contact"> <li>Contact Us</li></Link>
+                 <li><Link to= "/home">Home </Link></li> 
+                <li><Link to= "/home/about">About Us</Link></li>
+                 <li><Link to= "/home/contact">Contact Us</Link></li>
                 <li>Cart</li>
                 <button  className= {btnName === "Login"? "login-btn":"login-btn-danger"} onClick={()=>{
                     btnName === "Login"?  
