@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { LOGO_URL } from "./utils/constants";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "./utils/customeHooks/useOnlineStatus";
 const Header = ()=>{
 
-const [btnName,setBtnName] = useState("Login")
+const [btnName,setBtnName] = useState("Login");
+const onlineStatus = useOnlineStatus();
     return (
         <div className="header">
             <div className="logo-container">
@@ -14,6 +16,7 @@ const [btnName,setBtnName] = useState("Login")
                  <li><Link to= "/home">Home </Link></li> 
                 <li><Link to= "/home/about">About Us</Link></li>
                  <li><Link to= "/home/contact">Contact Us</Link></li>
+                 <li><Link to= "/home/game">Game</Link></li>
                 <li>Cart</li>
                 <button  className= {btnName === "Login"? "login-btn":"login-btn-danger"} onClick={()=>{
                     btnName === "Login"?  

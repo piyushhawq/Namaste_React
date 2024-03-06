@@ -8,10 +8,18 @@ import ContactUs from "./components/ContactUs";
 import Error from "./components/Error";
 import Home from "./components/Home";
 import RestaurantsMenu from "./components/RestaurantsMenu";
+import useOnlineStatus from "./components/utils/customeHooks/useOnlineStatus";
+import Game from "./components/Game";
 
 const AppLayout = ()=>{
+
+  const onlineStatus = useOnlineStatus();
+// console.log("Status from body",onlineStatus);
+if (onlineStatus === false) return <h1>Looks like you're Offline!! Please Check your Internet Connection</h1>
     return(
       <div className="app">
+
+        
           <Header/>
       <Outlet/>
       </div>
@@ -47,6 +55,10 @@ const appRouter = createBrowserRouter ([
   {
     path : "/home/contact",
     element:<ContactUs/>
+  },
+  {
+    path : "/home/game",
+    element:<Game/>
   },
 ],
 },

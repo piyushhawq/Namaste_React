@@ -1,66 +1,22 @@
-import { useState,useEffect } from "react";
 import { useParams } from "react-router-dom";
-
 import HomeShimmer from "./HomeShimmer";
+import useResturentMenue from "./utils/customeHooks/useResturentMenue";
 const RestaurantsMenu =()=>{
-const [resInfo,setResInfo]= useState (null);
-// const [jsonData,setJsonData] = useState(null);
-const [itemCards,setItemCards] =useState ();
-// const [regularItemCards,setRegularItemCards] =useState ();
 
 const {resId} = useParams();
 
-
-useEffect(()=>{
-fetchMenue();
-},[]);
-
-const fetchMenue = async() =>{
- const  data  = await fetch(`https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=25.3176452&lng=82.9739144&restaurantId=${resId}&catalog_qa=undefined&submitAction=ENTER`);
- const  json = await data.json();
- console.log(json);
+const [resInfo, itemCards] = useResturentMenue(resId);
 
 
-    const ResData = json?.data?.cards?.find(
-      (card) =>
-        card?.card?.card?.info !=
-        undefined
-    )?.card?.card?.info;
-    
-   
-    setResInfo(ResData);
-       
-    const ResCard = json?.data?.cards?.find(
-        (card) =>
-          card?.groupedCard?.cardGroupMap?.REGULAR?.cards !=
-          undefined
-      )?.groupedCard?.cardGroupMap?.REGULAR?.cards;
-    //   REGULAR?.cards[1].card.card for future ref
-        setItemCards(ResCard);
- 
-}
-
-
-
-if (resInfo === null) {
+if (resInfo === null || undefined) {
     return <HomeShimmer />;
   }
 
 
-
-//   if (resInfo === undefined || itemCards === undefined) {
-//     return <HomeShimmer />;
-//   }
+// console.log("resInfo",resInfo);
 
   const { name,cuisines,costForTwo} = resInfo;
 
-
-
-//   console.log("resInfo",resInfo);
-  console.log("itemCards all",itemCards);
-  console.log("itemCards",itemCards[1].card.card.itemCards)
-//   console.log("resInfo name",resInfo.name);
-//   console.log("resInfo cft",resInfo.costForTwo);
     return   (
 
 
@@ -80,6 +36,7 @@ if (resInfo === null) {
 
 </ul>
 </div>
+
     );
 }
 

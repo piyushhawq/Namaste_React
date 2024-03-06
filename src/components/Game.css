@@ -1,0 +1,129 @@
+/* .App {
+    text-align: center;
+  }
+  
+  .game-container {
+    position: relative;
+    width: 600px;
+    height: 300px;
+    margin: 20px auto;
+    border: 1px solid #000;
+    overflow: hidden;
+  }
+  
+  .dino {
+    position: absolute;
+    bottom: 0;
+    left: 50px;
+    width: 40px;
+    height: 60px;
+    background: url('https://i.imgur.com/7OGivBh.png') no-repeat;
+    background-size: contain;
+    transition: bottom 0.5s;
+  }
+  
+  .dino.jump {
+    bottom: 100px;
+  }
+  
+  .ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: #666;
+  }
+  
+  .obstacle {
+    position: absolute;
+    bottom: 0;
+    left: 100%;
+    width: 20px;
+    height: 40px;
+    background: #f00;
+  }
+  
+  .score {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .restart-btn {
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .restart-btn:hover {
+    background-color: #0056b3;
+  }
+   */
+
+   .game {
+    width: 600px;
+    height: 225px;
+    border: 1px solid black;
+    margin: auto;
+  }
+  
+  #dino {
+    width: 50px;
+    height: 50px;
+    background-image: url("https://play-lh.googleusercontent.com/iiIJq5JmLFYNI1bVz4IBHyoXs508JcEzHhOgau69bnveF9Wat51-ax9LMPVOlneKwqg=w240-h480-rw");
+    background-size: 50px 50px;
+    position: relative;
+    top: 150px;
+  }
+  
+  .jump {
+    animation: jump 0.3s linear;
+  }
+  
+  @keyframes jump {
+    0% {
+      top: 150px;
+    }
+  
+    30% {
+      top: 130px;
+    }
+  
+    50% {
+      top: 80px;
+    }
+  
+    80% {
+      top: 130px;
+    }
+  
+    100% {
+      top: 150px;
+    }
+  }
+  
+  #cactus {
+    width: 20px;
+    height: 40px;
+    position: relative;
+    top: 110px;
+    left: 580px;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADACAMAAAB/Pny7AAABWVBMVEX///ErkJggg==");
+    background-size: 20px 40px;
+    animation: block 1s infinite linear;
+  }
+  
+  @keyframes block {
+    0% {
+      left: 580px;
+    }
+  
+    100% {
+      left: -5px;
+    }
+  }

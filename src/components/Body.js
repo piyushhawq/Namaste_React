@@ -3,6 +3,7 @@ import ResturentCard from "./ResturentCard";
 import HomeShimmer from "./HomeShimmer";
 import { Link } from "react-router-dom";
 
+
 const Body = () => {
   const [listOfRestaurants,setListOfRestaurants] = useState([]);
   const [filterdRestaurants,setFilterdRestaurants] = useState([]);
