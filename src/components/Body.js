@@ -1,7 +1,8 @@
 import { useState ,useEffect} from "react"; 
-import ResturentCard from "./ResturentCard";
+import ResturentCard ,{withVegLabel}from "./ResturentCard";
 import HomeShimmer from "./HomeShimmer";
 import { Link } from "react-router-dom";
+
 
 
 const Body = () => {
@@ -13,7 +14,7 @@ const Body = () => {
   const [searchText, setSearchText] = useState('');
  const [avilable, setAvilable] = useState(false);
 
-
+const ResturentCardVeg = withVegLabel(ResturentCard);
 
   // const handleSearch = () => {
   //   console.log("Searching for location:", location);
@@ -81,7 +82,7 @@ useEffect(() => {
   }, [jsonData]);
 
 
-
+// console.log("reslist",filterdRestaurants)
 
 
     return listOfRestaurants && listOfRestaurants.length === 0 ? (
@@ -92,17 +93,19 @@ useEffect(() => {
 
       
 
-                <div className="filter">
+                <div className="flex items-center justify-start">
                 <input
+                className=" m-2 p-2 border-2"
                     type="text"
                     placeholder="Enter you city"
                     value={location}
                     onChange={handleInputChange}
                 
                   />
-                  <button  className="filter-btn" onClick={() => setLocation(location)}>Update Location</button>
+                  <button  className="m-2 p-2  bg-green-400 rounded-lg"  onClick={() => setLocation(location)}>Update Location</button>
                 <input
-                    type="text"
+                    className=" m-2 p-2 border-2"
+                   type="text"
                     placeholder="Search Cafe"
                     value={searchText}
                     onChange={(e)=>{
@@ -110,14 +113,14 @@ useEffect(() => {
                     }}
                 
                   />
-                  <button className="filter-btn" onClick={() => {
+                  <button className="m-2 p-2  bg-green-400 rounded-lg" onClick={() => {
                     // filter
                     const filteredRes = listOfRestaurants.filter(
                       (res) => res.info.name.toLowerCase().includes(searchText.toLowerCase())
                   );  setFilterdRestaurants(filteredRes);
                   }}>Search</button>
        
-        <button className="filter-btn" onClick={()=>{
+        <button className="m-2 p-2  bg-green-400 rounded-lg" onClick={()=>{
             const filteredList = filterdRestaurants.filter(
                 (res) => res.info.avgRating>4
             );
@@ -129,7 +132,7 @@ useEffect(() => {
             }
         }}>Top Rated Resturants</button>
 
-<button className="filter-btn" onClick={()=>{
+<button className="m-2 p-2  bg-green-400 rounded-lg" onClick={()=>{
             const filteredList = filterdRestaurants.filter(
                 (res) => res.info.veg === true
             );
@@ -141,7 +144,7 @@ useEffect(() => {
              }
         }}>Pure Veg</button>
 
-<button className="filter-btn" onClick={()=>{
+<button className="m-2 p-2  bg-green-400 rounded-lg" onClick={()=>{
             const filteredList = filterdRestaurants.filter(
                 (res) => res.info.sla.deliveryTime <30
             );
@@ -152,7 +155,7 @@ useEffect(() => {
             setFilterdRestaurants(filteredList);
              }
         }}>Fast Delivery</button>
-        <button className="filter-btn" onClick={()=>{
+        <button className="m-2 p-2 bg-red-500 rounded-lg text-white" onClick={()=>{
             setFilterdRestaurants(listOfRestaurants);
             setAvilable(false);
         }}>Reset</button>
@@ -160,10 +163,18 @@ useEffect(() => {
                 </div>
 
 
- <div className="res-container">
+ <div className="flex flex-wrap justify-center">
   {avilable ? <h1>Not available 😯😌😢</h1> : (
     filterdRestaurants && filterdRestaurants.map(resturant => (
-    <Link to = {"/home/restaurants/"+ resturant.info.id} key={resturant.info.id}>  <ResturentCard className ="rescardlist" resData={resturant} /></Link>
+
+
+    <Link to = {"/home/restaurants/"+ resturant.info.id} key={resturant.info.id}>  
+   {resturant.info.veg ?<ResturentCardVeg className ="rescardlist" resData={resturant}/>:
+    <ResturentCard className ="rescardlist" resData={resturant} />}
+    
+    </Link>
+
+
     ))
   )}
 </div>
