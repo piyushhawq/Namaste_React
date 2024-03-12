@@ -13,7 +13,7 @@ import { RES_MENU_URL } from "../constants";
         const fetchMenue = async() =>{
             const  data  = await fetch(RES_MENU_URL + resId);
             const  json = await data.json();
-            console.log(json);
+            // console.log(json);
            
            
                const ResData = json?.data?.cards?.find(
