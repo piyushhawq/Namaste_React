@@ -88,7 +88,7 @@ useEffect(() => {
     return listOfRestaurants && listOfRestaurants.length === 0 ? (
         <HomeShimmer />
       )  :(
-     <div className="body">
+     <div className="dark:bg-[#222222]">
        
 
       
@@ -122,7 +122,7 @@ useEffect(() => {
        
         <button className="m-2 p-2  bg-green-400 rounded-lg" onClick={()=>{
             const filteredList = filterdRestaurants.filter(
-                (res) => res.info.avgRating>4
+                (res) => res.info.avgRating>4.2
             );
             if (filteredList.length === 0) {
              setAvilable(true);

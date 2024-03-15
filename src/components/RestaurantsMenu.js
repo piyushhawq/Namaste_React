@@ -26,7 +26,7 @@ const categories = itemCards.filter((category) =>
 );
 
 
-// console.log("categories",categories)
+console.log("categories",categories)
     return   (
 
 
