@@ -13,6 +13,9 @@ import Game from "./components/Game";
 import { Provider } from "react-redux";
 import appStore from "./components/utils/appStore";
 import Cart from "./components/Cart";
+import { AuthProvider } from "./components/utils/customeHooks/authContext";
+import Login from "./components/Login";
+import Register from "./components/Register";
 const AppLayout = ()=>{
 
   const [darkMode, setDarkMode] = useState(false);
@@ -38,11 +41,13 @@ const AppLayout = ()=>{
 if (onlineStatus === false) return <h1>Looks like you're Offline!! Please Check your Internet Connection</h1>
     return(
       <Provider store={appStore}>
+        <AuthProvider>
       <div className={`${darkMode?"dark":""}`}>
 
           <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       <Outlet/>
       </div>
+      </AuthProvider>
       </Provider>
     )
     
@@ -55,6 +60,7 @@ const appRouter = createBrowserRouter ([
     element : <Home/>,
     errorElement : <Error/>
  },
+
   {
    path : "/home",
    element : <AppLayout/>,
@@ -63,6 +69,14 @@ const appRouter = createBrowserRouter ([
     {
       path : "/home/",
       element:<Body/>
+    },
+    {
+      path : "/home/login",
+      element:<Login/>
+    },
+    {
+      path : "/home/register",
+      element:<Register/>
     },
     {
       path : "/home/restaurants/:resId",

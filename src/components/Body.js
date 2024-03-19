@@ -1,7 +1,10 @@
 import { useState ,useEffect} from "react"; 
 import ResturentCard ,{withVegLabel}from "./ResturentCard";
+import { ToastContainer,toast } from "react-toastify";
 import HomeShimmer from "./HomeShimmer";
 import { Link } from "react-router-dom";
+
+import { useAuth } from "./utils/customeHooks/authContext";
 
 
 
@@ -16,6 +19,9 @@ const Body = () => {
 
 const ResturentCardVeg = withVegLabel(ResturentCard);
 
+const { currentUser } = useAuth()
+const { userLoggedIn } = useAuth()
+// console.log("userLoggedIn",userLoggedIn);
   // const handleSearch = () => {
   //   console.log("Searching for location:", location);
 
@@ -84,6 +90,9 @@ useEffect(() => {
 
 // console.log("reslist",filterdRestaurants)
 
+const showToast = ()=>{
+  toast("Top Rated Restureants")
+}
 
     return listOfRestaurants && listOfRestaurants.length === 0 ? (
         <HomeShimmer />
@@ -92,8 +101,9 @@ useEffect(() => {
        
 
       
+       {/* <div className='text-2xl font-bold pt-14'>Hello {currentUser.displayName ? currentUser.displayName : currentUser.email}, you are now logged in.</div> */}
 
-                <div className="flex items-center justify-start">
+                <div className=" lg:flex lg:items-center lg:justify-start hidden overflow-hidden ">
                 <input
                 className=" m-2 p-2 border-2"
                     type="text"
@@ -120,7 +130,8 @@ useEffect(() => {
                   );  setFilterdRestaurants(filteredRes);
                   }}>Search</button>
        
-        <button className="m-2 p-2  bg-green-400 rounded-lg" onClick={()=>{
+        <button className="m-2 p-2  bg-green-400 rounded-lg" onClick={
+          ()=>{
             const filteredList = filterdRestaurants.filter(
                 (res) => res.info.avgRating>4.2
             );
@@ -129,9 +140,12 @@ useEffect(() => {
             } else {
               
             setFilterdRestaurants(filteredList);
+           
             }
-        }}>Top Rated Resturants</button>
-
+        }
+        }>Top Rated Resturants</button>
+<ToastContainer
+position="top-right"/>
 <button className="m-2 p-2  bg-green-400 rounded-lg" onClick={()=>{
             const filteredList = filterdRestaurants.filter(
                 (res) => res.info.veg === true
@@ -141,6 +155,7 @@ useEffect(() => {
              } else {
                
             setFilterdRestaurants(filteredList);
+
              }
         }}>Pure Veg</button>
 
@@ -163,7 +178,7 @@ useEffect(() => {
                 </div>
 
 
- <div className="flex flex-wrap justify-center">
+ <div className="flex flex-wrap justify-center ">
   {avilable ? <h1>Not available 😯😌😢</h1> : (
     filterdRestaurants && filterdRestaurants.map(resturant => (
 

@@ -1,4 +1,5 @@
 import { CDN_URL, STAR_ICON_URL } from "./utils/constants";
+
 const ResturentCard =(props)=>{
     const  { resData }=props;
     // console.log("resData",resData)
@@ -11,7 +12,9 @@ const ResturentCard =(props)=>{
       avgRating}= resData?.info;
       return(
           // <h1>testing</h1>
-          <div className="m-4 p-4 w-[250px]  bg-[#31363F] text-[#EEEEEE] rounded-xl shadow-md hover:bg-gray-200 dark: shadow-md dark: shadow-gray-800">
+          <div className="m-4 p-4  w-[250px]  dark:text-[#EEEEEE]  hover:scale-95">
+
+          {/* // <div className="m-4 p-4 w-[250px]   dark:text-[#EEEEEE] rounded-xl shadow-md  dark: shadow-md dark: shadow-gray-800"> */}
           {/* // <div className="m-4 p-4 w-[250px] bg-gray-100 rounded-xl shadow-xl hover:bg-gray-100 hover:shadow-lg hover:shadow-gray-800"> */}
   
           <img className=" rounded-lg w-[225px] h-[150px] object-cover" src={CDN_URL+cloudinaryImageId} alt ="reslogo"/>

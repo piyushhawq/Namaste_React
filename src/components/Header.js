@@ -1,48 +1,50 @@
 import { useEffect, useState, useContext } from "react";
 import { LOGO_URL } from "./utils/constants";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import useOnlineStatus from "./utils/customeHooks/useOnlineStatus";
 import UserContext from "./utils/UserContext";
 import { useSelector } from "react-redux";
+import { useAuth } from "./utils/customeHooks/authContext";
+import { doSignOut } from "./firebase/auth";
+import { FaBars, FaAngleDown } from 'react-icons/fa'
+import { FaXmark } from "react-icons/fa6";
+
+
 const Header = ({ darkMode, toggleDarkMode }) => {
   const [btnName, setBtnName] = useState("Login");
-  // const [darkMode, setDarkMode] = useState(false);
   const { loggedInUser } = useContext(UserContext);
 
   // subscribing to the store using selector
   const cartItems = useSelector((store) => store.cart.items);
   console.log("cart items", cartItems);
 
-  // Function to toggle dark mode
-  // const toggleDarkMode = () => {
-  //   // Toggle dark mode state
-  //   setDarkMode(!darkMode);
-  // };
+  
+  const navigate = useNavigate()
+ const userData = useAuth()
+  const { userLoggedIn } = useAuth()
+  console.log("userLoggedIn",userLoggedIn);
 
-  // Apply dark mode class to HTML element based on state
-  // useEffect(() => {
-  //   if (darkMode) {
-  //     document.documentElement.classList.add("dark");
-  //   } else {
-  //     document.documentElement.classList.remove("dark");
-  //   }
-  // }, [darkMode]);
+  console.log("userData",userData);
+ 
+  const [isMenuOpen, setMenuOpen] = useState(false);
 
+  const handleResize = () => {
+    if (window.innerWidth > 1024) {
+      setMenuOpen(true); // Open menu if window width is greater than 1024
+    } else {
+      setMenuOpen(false); // Close menu if window width is 1024 or less
+    }
+  };
+  
+  useEffect(() => {
+    // Initialize menu state and add resize event listener
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-//   useEffect(()=>{
-// let savedMode = localStorage.getItem("displayMode")
-// if(!savedMode){
-//   savedMode = 'light'
-//   setDarkMode(false)
-//   localStorage.setItem("displayMode",savedMode)
-// }
-// setDarkMode(savedMode==="dark" ?true :false)
-//   },[])
-
-
-  //  console.log("dark mode",darkMode)
   return (
-<div className="flex justify-between shadow-lg bg-slate-400 dark:bg-[#222222] dark:shadow-lg dark:shadow-slate-50">
+<div className="flex justify-between shadow-lg bg-slate-400 dark:bg-[#222222] dark:shadow-lg dark:shadow-slate-50   overflow-hidden">
 
       <div className="logo-container">
         <Link to="/home">
@@ -51,20 +53,25 @@ const Header = ({ darkMode, toggleDarkMode }) => {
         </Link>
       </div>
       <div className="flex items-center">
-        <ul className="flex">
-          <li className="px-4 m-4 dark:text-white">
+      <button className="lg:hidden text-black focus:outline-none ml-4 mr-5" onClick={() => setMenuOpen(prev => !prev)}>
+    {isMenuOpen ? <FaXmark className='w-8 h-8' /> : <FaBars className='w-8 h-8' />} </button>
+      
+      <ul className={`fixed lg:flex lg:static m-8 mr-0 p-4 right-0 top-8  xs:top-16 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform ease-in-out`}>
+
+        {/* <ul className="flex"> */}
+          <li className="px-4 m-4 dark:text-black">
             <Link to="/home">Home </Link>
           </li>
-          <li className="px-4 m-4  dark:text-white">
+          <li className="px-4 m-4  dark:text-black">
             <Link to="/home/about">About Us</Link>
           </li>
-          <li className="px-4 m-4 dark:text-white">
+          <li className="px-4 m-4 dark:text-black">
             <Link to="/home/contact">Contact Us</Link>
           </li>
-          <li className="px-4 m-4  dark:text-white">
+          <li className="px-4 m-4  dark:text-black">
             <Link to="/home/game">Game</Link>
           </li>
-          <li className="px-4 m-4 font-bold text-xl  dark:text-white">
+          <li className="px-4 m-4 font-bold text-xl  dark:text-black">
             {" "}
             <Link to="/home/cart">Cart- ({cartItems.length} items) </Link>
           </li>
@@ -88,18 +95,22 @@ const Header = ({ darkMode, toggleDarkMode }) => {
             {darkMode ? "Dark Mode" : "Light Mode"}
           </button> */}
 
-          {/* Example element styled differently in light and dark mode */}
-          <button
-            className={
-              btnName === "Login" ? "login-btn  dark:text-white" : "login-btn-danger px-4 m-4  dark:text-white"
+
+<li className="px-4 m-4 font-bold text-xl  dark:text-white">
+          {
+                userLoggedIn
+                    ?
+                    <>
+
+                        <button onClick={() => { doSignOut().then(() => { navigate('/home') }) }} className='text-sm text-blue-600 underline'>Logout</button>
+                    </>
+                    :
+                    <>
+                        <Link className='px-2 m-1 font-bold text-xl  dark:text-white underline' to={'/home/login'}>Login</Link>
+                        {/* <Link className='px-2 m-1 font-bold text-xl  dark:text-white underline' to={'/home/register'}>Register</Link> */}
+                    </>
             }
-            onClick={() => {
-              btnName === "Login" ? setBtnName("Logout") : setBtnName("Login");
-            }}
-          >
-            {btnName}
-            {loggedInUser}
-          </button>
+          </li>
         </ul>
       </div>
     </div>

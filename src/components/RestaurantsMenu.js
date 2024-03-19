@@ -30,11 +30,11 @@ console.log("categories",categories)
     return   (
 
 
-<div className="text-center">
+<div className=" dark: bg-black">
 
   
 
-    <h1 className="my-8 text-2xl font-boldt-">{name}</h1>
+    <h1 className="mb-8 text-2xl font-boldt-">{name}</h1>
       <h3>{cuisines.join(",")} Rs {costForTwo / 100} for two</h3>
     
     <h2>Menu</h2>
