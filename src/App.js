@@ -16,6 +16,7 @@ import Cart from "./components/Cart";
 import { AuthProvider } from "./components/utils/customeHooks/authContext";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import RecipesRestaurant from "./components/RecipesRestaurant";
 const AppLayout = ()=>{
 
   const [darkMode, setDarkMode] = useState(false);
@@ -54,51 +55,52 @@ if (onlineStatus === false) return <h1>Looks like you're Offline!! Please Check 
 } ;
 
 const appRouter = createBrowserRouter ([
- 
-  {
-    path : "/",
-    element : <Home/>,
-    errorElement : <Error/>
- },
+
 
   {
-   path : "/home",
+   path : "/",
    element : <AppLayout/>,
+   
    children : [
     
     {
-      path : "/home/",
+      path : "/",
       element:<Body/>
     },
     {
-      path : "/home/login",
+      path : "/login",
       element:<Login/>
     },
     {
-      path : "/home/register",
+      path : "/register",
       element:<Register/>
     },
     {
-      path : "/home/restaurants/:resId",
+      path : "/restaurants/:resId",
       element:<RestaurantsMenu/>
     },
     {
-    path : "/home/about",
+      path: "/collection/:query",
+      element: <RecipesRestaurant />
+  },
+    {
+    path : "/about",
     element:<About/>
   },
   {
-    path : "/home/cart",
+    path : "/cart",
     element:<Cart/>
   },
   {
-    path : "/home/contact",
+    path : "/contact",
     element:<ContactUs/>
   },
   {
-    path : "/home/game",
+    path : "/game",
     element:<Game/>
   },
 ],
+errorElement : <Error/>
 },
 
 ]);

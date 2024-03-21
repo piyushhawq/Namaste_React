@@ -8,6 +8,7 @@ import { useAuth } from "./utils/customeHooks/authContext";
 import { doSignOut } from "./firebase/auth";
 import { FaBars, FaAngleDown } from 'react-icons/fa'
 import { FaXmark } from "react-icons/fa6";
+import CityLocation from "./CityLocation";
 
 
 const Header = ({ darkMode, toggleDarkMode }) => {
@@ -18,7 +19,9 @@ const Header = ({ darkMode, toggleDarkMode }) => {
   const cartItems = useSelector((store) => store.cart.items);
   console.log("cart items", cartItems);
 
-  
+  const userCity = useSelector(store => store.location.cityName);
+  console.log("userCity",userCity);
+
   const navigate = useNavigate()
  const userData = useAuth()
   const { userLoggedIn } = useAuth()
@@ -27,6 +30,8 @@ const Header = ({ darkMode, toggleDarkMode }) => {
   console.log("userData",userData);
  
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [cityVisibility, setCityVisibility] = useState(false)
+
 
   const handleResize = () => {
     if (window.innerWidth > 1024) {
@@ -46,34 +51,43 @@ const Header = ({ darkMode, toggleDarkMode }) => {
   return (
 <div className="flex justify-between shadow-lg bg-slate-400 dark:bg-[#222222] dark:shadow-lg dark:shadow-slate-50   overflow-hidden">
 
-      <div className="logo-container">
-        <Link to="/home">
+      <div className="flex items-center justify-between">
+        <Link to="/">
           {" "}
           <img className="m-2  w-20 rounded-full" src={LOGO_URL} />{" "}
         </Link>
+
+        <div className='flex items-center p-4 xs:text-xl hover:text-orange-500 cursor-pointer text-gray-500 bg-transparent' onClick={()=> setCityVisibility(prev => !prev)}>
+                    <span className='pr-2'>{userCity}</span>
+                    <span className='text-orange-500'><FaAngleDown /></span>
+                </div>
+                <div className={`transition-transform transform duration-500 ease-in-out ${cityVisibility ? 'translate-x-0' : '-translate-x-full'} bg-slate-100 p-4 absolute top-0 left-0 z-50`} >
+        
+                <CityLocation handleVisible={setCityVisibility} X={FaXmark}/>
+            </div>
       </div>
       <div className="flex items-center">
       <button className="lg:hidden text-black focus:outline-none ml-4 mr-5" onClick={() => setMenuOpen(prev => !prev)}>
     {isMenuOpen ? <FaXmark className='w-8 h-8' /> : <FaBars className='w-8 h-8' />} </button>
       
-      <ul className={`fixed lg:flex lg:static m-8 mr-0 p-4 right-0 top-8  xs:top-16 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform ease-in-out`}>
+      <ul className={`fixed lg:flex lg:static mx-8 mr-0 p-4 right-0 top-8  xs:top-16 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform ease-in-out`}>
 
         {/* <ul className="flex"> */}
           <li className="px-4 m-4 dark:text-black">
-            <Link to="/home">Home </Link>
+            <Link to="/">Home </Link>
           </li>
           <li className="px-4 m-4  dark:text-black">
-            <Link to="/home/about">About Us</Link>
+            <Link to="/about">About Us</Link>
           </li>
           <li className="px-4 m-4 dark:text-black">
-            <Link to="/home/contact">Contact Us</Link>
+            <Link to="/contact">Contact Us</Link>
           </li>
           <li className="px-4 m-4  dark:text-black">
-            <Link to="/home/game">Game</Link>
+            <Link to="/game">Game</Link>
           </li>
           <li className="px-4 m-4 font-bold text-xl  dark:text-black">
             {" "}
-            <Link to="/home/cart">Cart- ({cartItems.length} items) </Link>
+            <Link to="/cart">Cart- ({cartItems.length} items) </Link>
           </li>
         
 
@@ -102,11 +116,11 @@ const Header = ({ darkMode, toggleDarkMode }) => {
                     ?
                     <>
 
-                        <button onClick={() => { doSignOut().then(() => { navigate('/home') }) }} className='text-sm text-blue-600 underline'>Logout</button>
+                        <button onClick={() => { doSignOut().then(() => { navigate('/') }) }} className='text-sm text-blue-600 underline'>Logout</button>
                     </>
                     :
                     <>
-                        <Link className='px-2 m-1 font-bold text-xl  dark:text-white underline' to={'/home/login'}>Login</Link>
+                        <Link className='px-2 m-1 font-bold text-xl  dark:text-white underline' to={'/login'}>Login</Link>
                         {/* <Link className='px-2 m-1 font-bold text-xl  dark:text-white underline' to={'/home/register'}>Register</Link> */}
                     </>
             }

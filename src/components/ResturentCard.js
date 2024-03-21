@@ -32,7 +32,7 @@ const ResturentCard =(props)=>{
 
 
           <div className="flex justify-between ">
-          {locality.length>15 ?(
+          {locality?.length>15 ?(
             <h4  className="text-sm font-bold mx-1">{locality.slice(0,15)}...</h4>
           ):(
           <h4  className="text-sm font-bold mx-1">{locality}</h4>

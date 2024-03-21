@@ -1,17 +1,26 @@
 import { useEffect ,useState} from "react";
-import { RES_MENU_URL } from "../constants";
+import { SERVER_URL} from "../constants";
+import { useSelector } from "react-redux";
+
+
 
  const useResturentMenue = (resId) =>{
     // console.log("resid",resId);
     const [resInfo,setResInfo]= useState (null);
     const [itemCards,setItemCards] =useState ();
+
+    const {latitude, longitude} = useSelector(store => store.location)
+
     
     useEffect(()=>{
         fetchMenue();
         },[]);
 
         const fetchMenue = async() =>{
-            const  data  = await fetch(RES_MENU_URL + resId);
+
+            const data = await fetch(`${SERVER_URL}/api/swiggy/getMenu?lat=${latitude}&lng=${longitude}&restaurantId=${resId}`)
+
+            // const  data  = await fetch(RES_MENU_URL + resId);
             const  json = await data.json();
             // console.log(json);
            
